@@ -1,7 +1,12 @@
 import React from 'react'
 import 'bulma/css/bulma.css'
 import NavBar from './NavBar'
+import NoteList from './NoteList'
 
-const App = () => <NavBar>--your component--</NavBar>
+const App = () => (
+  <NavBar>
+    <NoteList />
+  </NavBar>
+)
 
 export default App
