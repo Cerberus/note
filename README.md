@@ -24,9 +24,21 @@ After endpoint was created, you will receive this message:
 
   API Documentation: https://www.graph.cool/docs/graphql-up/
 ```
-Copy your `Simple API` and paste into `uri` key at `index.js`
+At `index.js`, copy your `Simple API` and paste into `uri` key in `new Link({ uri: ... })`
+```
+new Link({
+  uri: 'https://api.graph.cool/simple/v1/__path__',
+}),
+```
+And you must manually fill web socket path into `uri` key in `new WebSocketLink({ uri: ... })`
+```
+new WebSocketLink({
+  uri: 'wss://subscriptions.graph.cool/v1/__path__',
+  options: { reconnect: true },
+}),
+```
 
-Open `Simple API` on the browser to access Playground
+Open `Simple API` link on the browser to access Playground
 ![playground](https://user-images.githubusercontent.com/9087409/30781573-ad4ff7b2-a14b-11e7-85d2-73c4f023adcd.png)
 
 ### Installation

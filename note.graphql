@@ -1,4 +1,4 @@
-type Note {
+type Note @model {
   id: ID! @isUnique
   detail: String
 }

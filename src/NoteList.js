@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose } from 'recompose'
+import { compose, withHandlers, lifecycle } from 'recompose'
 import { graphql, gql } from 'react-apollo'
 import preDisplay from './preDisplay'
 import Note from './Note'
@@ -29,6 +29,67 @@ const enhance = compose(
     }),
   }),
   preDisplay('allNoteQuery'),
+  withHandlers({
+    subscribeNotes: ({ allNoteQuery }) => () => {
+      allNoteQuery.subscribeToMore({
+        document: gql`
+          subscription {
+            Note(filter: {
+              mutation_in: [CREATED, UPDATED, DELETED] # support update
+            }){
+              mutation
+              previousValues{
+                id
+              }
+              updatedFields
+              node {
+                ...noteFragment
+              }
+            }
+          }
+          ${noteFragment}
+      `,
+        updateQuery: (prev, { subscriptionData: { data: { Note } } }) => {
+          switch (Note.mutation) {
+            case 'CREATED':
+              return {
+                ...prev,
+                allNotes: [
+                  ...prev.allNotes.filter(note => note.id !== Note.node.id),
+                  Note.node,
+                ],
+              }
+            case 'UPDATED':
+              return {
+                ...prev,
+                allNotes: [
+                  ...prev.allNotes.map(
+                    note => (note.id === Note.node ? Note.node : note),
+                  ),
+                ],
+              }
+            case 'DELETED':
+              return {
+                ...prev,
+                allNotes: [
+                  ...prev.allNotes.filter(
+                    note => note.id !== Note.previousValues.id,
+                  ),
+                ],
+              }
+            default:
+              return prev
+          }
+        },
+        onError: err => console.error(err),
+      })
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      this.props.subscribeNotes()
+    },
+  }),
 )
 
 const NoteList = ({ notes }) => (
