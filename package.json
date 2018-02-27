@@ -3,18 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bulma": "^0.5.3",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-scripts": "1.0.13",
     "apollo-cache-inmemory": "0.2.0-beta.1",
     "apollo-client": "2.0.0-beta.1",
     "apollo-link": "0.6.1-beta.4",
-    "apollo-link-ws": "0.4.1-beta.4",
     "apollo-link-core": "0.5.4",
     "apollo-link-http": "0.6.1-beta.4",
-    "react-apollo": "^1.4.14",
-    "recompose": "^0.25.0"
+    "apollo-link-ws": "0.4.1-beta.4",
+    "bulma": "^0.5.3",
+    "graphql-tag": "^2.8.0",
+    "react": "^15.6.1",
+    "react-apollo": "^2.1.0-beta.3",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.13",
+    "recompose": "^0.25.0",
+    "styled-components": "^3.1.6"
   },
   "scripts": {
     "start": "react-scripts start",

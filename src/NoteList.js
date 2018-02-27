@@ -1,6 +1,7 @@
 import React from 'react'
 import { compose, withHandlers, lifecycle } from 'recompose'
-import { graphql, gql } from 'react-apollo'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import preDisplay from './preDisplay'
 import Note from './Note'
 
@@ -13,11 +14,11 @@ const noteFragment = `
 
 const ALL_NOTES = gql`
   query {
-    allNotes{
+    allNotes {
       ...noteFragment
     }
   }
-${noteFragment}
+  ${noteFragment}
 `
 
 const enhance = compose(
@@ -34,11 +35,13 @@ const enhance = compose(
       allNoteQuery.subscribeToMore({
         document: gql`
           subscription {
-            Note(filter: {
-              mutation_in: [CREATED, UPDATED, DELETED] # support update
-            }){
+            Note(
+              filter: {
+                mutation_in: [CREATED, UPDATED, DELETED] # support update
+              }
+            ) {
               mutation
-              previousValues{
+              previousValues {
                 id
               }
               updatedFields
@@ -48,7 +51,7 @@ const enhance = compose(
             }
           }
           ${noteFragment}
-      `,
+        `,
         updateQuery: (prev, { subscriptionData: { data: { Note } } }) => {
           switch (Note.mutation) {
             case 'CREATED':

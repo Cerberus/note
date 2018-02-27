@@ -1,5 +1,6 @@
 import React from 'react'
-import { graphql, gql } from 'react-apollo'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import { compose, withState, withHandlers } from 'recompose'
 
 const CREATE_NOTE = gql`
