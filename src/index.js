@@ -18,11 +18,11 @@ const hasSubscriptionOperation = ({ query: { definitions } }) =>
 const link = ApolloLink.split(
   hasSubscriptionOperation,
   new WebSocketLink({
-    uri: 'wss://subscriptions.graph.cool/v1/__path__',
+    uri: 'wss://subscriptions.graph.cool/v1/discospider-ripper-766',
     options: { reconnect: true },
   }),
   new Link({
-    uri: 'https://api.graph.cool/simple/v1/__path__',
+    uri: 'https://api.graph.cool/simple/v1/discospider-ripper-766',
   }),
 )
 
