@@ -1,6 +1,6 @@
 import React from 'react'
-import { compose, withHandlers, lifecycle } from 'recompose'
-import { graphql } from 'react-apollo'
+import { compose, withHandlers, lifecycle, mapProps } from 'recompose'
+import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import preDisplay from './preDisplay'
 import Note from './Note'
@@ -22,17 +22,10 @@ const ALL_NOTES = gql`
 `
 
 const enhance = compose(
-  graphql(ALL_NOTES, {
-    name: 'allNoteQuery',
-    props: props => ({
-      ...props,
-      notes: props.allNoteQuery.allNotes,
-    }),
-  }),
-  preDisplay('allNoteQuery'),
+  preDisplay,
   withHandlers({
-    subscribeNotes: ({ allNoteQuery }) => () => {
-      allNoteQuery.subscribeToMore({
+    subscribeNotes: info => () => {
+      info.subscribeToMore({
         document: gql`
           subscription {
             Note(
@@ -93,6 +86,7 @@ const enhance = compose(
       this.props.subscribeNotes()
     },
   }),
+  mapProps(({ data, ...rest }) => ({ notes: data.allNotes, ...rest })),
 )
 
 const NoteList = ({ notes }) => (
@@ -104,4 +98,10 @@ const NoteList = ({ notes }) => (
   </div>
 )
 
-export default enhance(NoteList)
+const EnhanceNoteList = enhance(NoteList)
+
+export default props => (
+  <Query query={ALL_NOTES}>
+    {info => <EnhanceNoteList {...info} {...props} />}
+  </Query>
+)
