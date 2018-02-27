@@ -19,8 +19,7 @@ const LoadingComponent = () => <LoadingBox>Loading..</LoadingBox>
 
 const ErrorComponent = () => <ErrorBox>Error..</ErrorBox>
 
-export default name =>
-  compose(
-    branch(props => props[name].loading, renderComponent(LoadingComponent)),
-    branch(props => props[name].error, renderComponent(ErrorComponent)),
-  )
+export default compose(
+  branch(props => props.loading, renderComponent(LoadingComponent)),
+  branch(props => props.error, renderComponent(ErrorComponent)),
+)
