@@ -1,11 +1,13 @@
+import { ApolloClient } from 'apollo-client'
+import { ApolloLink } from 'apollo-link'
+import { ApolloProvider } from 'react-apollo'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { WebSocketLink } from 'apollo-link-ws'
+import { createHttpLink } from 'apollo-link-http'
+import Cache from 'apollo-cache-inmemory'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ApolloProvider } from 'react-apollo'
-import ApolloClient from 'apollo-client'
-import { ApolloLink } from 'apollo-link'
-import WebSocketLink from 'apollo-link-ws'
-import Link from 'apollo-link-http'
-import Cache from 'apollo-cache-inmemory'
+
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
@@ -17,12 +19,13 @@ const hasSubscriptionOperation = ({ query: { definitions } }) =>
 
 const link = ApolloLink.split(
   hasSubscriptionOperation,
-  new WebSocketLink({
-    uri: 'wss://subscriptions.graph.cool/v1/__path__',
-    options: { reconnect: true },
-  }),
-  new Link({
-    uri: 'https://api.graph.cool/simple/v1/__path__',
+  new WebSocketLink(
+    new SubscriptionClient(process.env.REACT_APP_WEB_SOCKET_URL, {
+      reconnect: true,
+    }),
+  ),
+  createHttpLink({
+    uri: process.env.REACT_APP_API_URL,
   }),
 )
 

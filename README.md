@@ -16,30 +16,24 @@ After endpoint was created, you will receive this message:
 ```
   ✔  Your GraphQL API is ready to use. Here are your endpoints:
 
-    ❯ Simple API: https://api.graph.cool/simple/v1/__path__
-    ❯ Relay API:  https://api.graph.cool/relay/v1/__path__
-
+    ❯ Simple API: https://api.graph.cool/simple/v1/__alias__
+    ❯ Relay API:  https://api.graph.cool/relay/v1/__alias__
+    ❯ Subscriptions API: wss://subscriptions.graph.cool/v1/__alias__
 
   Open your GraphQL endpoint in a browser to use the interactive API Playground.
 
   API Documentation: https://www.graph.cool/docs/graphql-up/
 ```
-At `index.js`, copy your `Simple API` and paste into `uri` key in `new Link({ uri: ... })`
+Create env file
 ```
-new Link({
-  uri: 'https://api.graph.cool/simple/v1/__path__',
-}),
+yarn env
 ```
-And you must manually fill web socket path into `uri` key in `new WebSocketLink({ uri: ... })`
+Set Simple API & Subscriptions API to .env file
 ```
-new WebSocketLink({
-  uri: 'wss://subscriptions.graph.cool/v1/__path__',
-  options: { reconnect: true },
-}),
+NODE_PATH=src/
+REACT_APP_API_URL="https://api.graph.cool/simple/v1/__alias__"
+REACT_APP_WEB_SOCKET_URL="wss://subscriptions.graph.cool/v1/__alias__"
 ```
-
-Open `Simple API` link on the browser to access Playground
-![playground](https://user-images.githubusercontent.com/9087409/30781573-ad4ff7b2-a14b-11e7-85d2-73c4f023adcd.png)
 
 ### Installation
 ```
@@ -50,3 +44,7 @@ yarn
 ```
 yarn start
 ```
+
+### Playground
+Open `Simple API` link on the browser to access Playground
+![playground](https://user-images.githubusercontent.com/9087409/30781573-ad4ff7b2-a14b-11e7-85d2-73c4f023adcd.png)
