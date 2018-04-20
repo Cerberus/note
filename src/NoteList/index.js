@@ -5,6 +5,8 @@ import gql from 'graphql-tag'
 import EnQuery from 'EnQuery'
 import Note from 'Note'
 
+import { type NoteListQ } from './__generated__/NoteListQ';
+
 const noteFragment = gql`
   fragment noteFragment on Note {
     id
@@ -80,7 +82,7 @@ const enhance = compose(
 
 const NoteList = props => (
   <EnQuery query={ALL_NOTES} subscribeToMoreParam={props.subscribeToMoreParam}>
-    {({ allNotes }) => (
+    {({ allNotes }: NoteListQ) => (
       <div className="columns">
         <div className="column is-half is-offset-one-quarter">
           <b>Note list</b>
