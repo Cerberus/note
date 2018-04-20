@@ -85,7 +85,7 @@ const NoteList = props => (
     {({ allNotes }: NoteListQ) => (
       <div className="columns">
         <div className="column is-half is-offset-one-quarter">
-          <b>Note list</b>
+          <b>Note list{allNotes.length > 0 && `(${allNotes.length})`}</b>
           <ol>
             {allNotes.length <= 0 ? (
               <span>No task at here..</span>
