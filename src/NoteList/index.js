@@ -5,22 +5,16 @@ import gql from 'graphql-tag'
 import EnQuery from 'EnQuery'
 import Note from 'Note'
 
-import { type NoteListQ } from './__generated__/NoteListQ';
+import { type NoteListQ } from './__generated__/NoteListQ'
+import { NOTE_FRAGMENT } from 'schema/Note'
 
-const noteFragment = gql`
-  fragment noteFragment on Note {
-    id
-    detail
-  }
-`
-
-const ALL_NOTES = gql`
+export const ALL_NOTES = gql`
   query NoteListQ {
     allNotes {
       ...noteFragment
     }
   }
-  ${noteFragment}
+  ${NOTE_FRAGMENT}
 `
 
 const ALL_NOTES_SUBSCRIPTION = gql`
@@ -36,7 +30,7 @@ const ALL_NOTES_SUBSCRIPTION = gql`
       }
     }
   }
-  ${noteFragment}
+  ${NOTE_FRAGMENT}
 `
 
 const enhance = compose(

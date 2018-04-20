@@ -1,14 +1,17 @@
-import React from 'react'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
 import { compose, withState, withHandlers } from 'recompose'
+import { graphql } from 'react-apollo'
+import React from 'react'
+import gql from 'graphql-tag'
+import { ALL_NOTES } from 'NoteList'
+import { NOTE_FRAGMENT } from 'schema/Note'
 
 const CREATE_NOTE = gql`
   mutation CreateNoteM($detail: String!) {
     createNote(detail: $detail) {
-      id
+      ...noteFragment
     }
   }
+  ${NOTE_FRAGMENT}
 `
 
 const enhance = compose(
@@ -23,6 +26,19 @@ const enhance = compose(
       return createNoteQuery({
         variables: {
           detail,
+        },
+        update: (store, { data: { createNote } }) => {
+          store.writeQuery({
+            query: ALL_NOTES,
+            data: {
+              allNotes: [
+                ...store
+                  .readQuery({ query: ALL_NOTES })
+                  .allNotes.filter(({ id }) => id !== createNote.id),
+                createNote,
+              ],
+            },
+          })
         },
       })
         .then(() => setDetail('')) // reset form
@@ -54,6 +70,7 @@ class CreateNote extends React.PureComponent {
               className="input"
               onChange={e => setDetail(e.target.value)}
               disabled={isSubmitting}
+              placeholder="type here.."
               value={detail}
               ref={this.textInput}
             />

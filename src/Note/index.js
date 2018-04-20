@@ -2,13 +2,16 @@ import React from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import { compose } from 'recompose'
+import { ALL_NOTES } from 'NoteList'
+import { NOTE_FRAGMENT } from 'schema/Note'
 
 const DELETE_NOTE = gql`
-  mutation NoteM ($id: ID!) {
+  mutation NoteM($id: ID!) {
     deleteNote(id: $id) {
-      id
+      ...noteFragment
     }
   }
+  ${NOTE_FRAGMENT}
 `
 
 const enhance = compose(
@@ -16,6 +19,18 @@ const enhance = compose(
     name: 'deleteLink',
     options: ({ id }) => ({
       variables: { id },
+      update: (store, { data: { deleteNote } }) => {
+        store.writeQuery({
+          query: ALL_NOTES,
+          data: {
+            allNotes: [
+              ...store
+                .readQuery({ query: ALL_NOTES })
+                .allNotes.filter(({ id }) => id !== deleteNote.id),
+            ],
+          },
+        })
+      },
     }),
   }),
 )
