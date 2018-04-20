@@ -1,8 +1,11 @@
-import React from 'react'
 import 'bulma/css/bulma.css'
+
+import React from 'react'
+
+import CreateNote from 'CreateNote'
+import NoteList from 'NoteList'
+
 import NavBar from './NavBar'
-import NoteList from './NoteList'
-import CreateNote from './CreateNote'
 
 const App = () => (
   <NavBar>

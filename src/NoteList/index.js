@@ -2,23 +2,16 @@ import { compose, withPropsOnChange } from 'recompose'
 import React from 'react'
 import gql from 'graphql-tag'
 
-import EnQuery from '../EnQuery'
-import Note from '../Note'
-
-const noteFragment = `
-  fragment noteFragment on Note {
-    id
-    detail
-  }
-`
+import EnQuery from 'EnQuery'
+import Note from 'Note'
 
 const ALL_NOTES = gql`
   query NoteListQ {
     allNotes {
-      ...noteFragment
+      id
+      detail
     }
   }
-  ${noteFragment}
 `
 
 const ALL_NOTES_SUBSCRIPTION = gql`
@@ -30,11 +23,11 @@ const ALL_NOTES_SUBSCRIPTION = gql`
       }
       updatedFields
       node {
-        ...noteFragment
+        id
+        detail
       }
     }
   }
-  ${noteFragment}
 `
 
 const enhance = compose(
