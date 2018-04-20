@@ -24,6 +24,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "intro": "pcregrep -o1 'REACT_APP_API_URL=\"(.*)\"' .env | xargs apollo-codegen introspect-schema --output src/schema/gen.json",
+    "gen": "grep -LR @client src/* --include *.js | xargs apollo-codegen generate --schema src/schema/gen.json  --target flow-modern --output src/schema/index.js"
+  },
+  "devDependencies": {
+    "apollo-codegen": "^0.19.1"
   }
 }
