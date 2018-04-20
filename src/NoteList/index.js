@@ -5,17 +5,24 @@ import gql from 'graphql-tag'
 import EnQuery from 'EnQuery'
 import Note from 'Note'
 
-const ALL_NOTES = gql`
-  query NoteListQ {
-    allNotes {
-      id
-      detail
-    }
+const noteFragment = gql`
+  fragment noteFragment on Note {
+    id
+    detail
   }
 `
 
+const ALL_NOTES = gql`
+  query NoteListQ {
+    allNotes {
+      ...noteFragment
+    }
+  }
+  ${noteFragment}
+`
+
 const ALL_NOTES_SUBSCRIPTION = gql`
-  subscription {
+  subscription NoteListS {
     Note(filter: { mutation_in: [CREATED, UPDATED, DELETED] }) {
       mutation
       previousValues {
@@ -23,11 +30,11 @@ const ALL_NOTES_SUBSCRIPTION = gql`
       }
       updatedFields
       node {
-        id
-        detail
+        ...noteFragment
       }
     }
   }
+  ${noteFragment}
 `
 
 const enhance = compose(

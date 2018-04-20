@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import { compose, withState, withHandlers } from 'recompose'
 
 const CREATE_NOTE = gql`
-  mutation($detail: String!) {
+  mutation CreateNoteM ($detail: String!) {
     createNote(detail: $detail) {
       id
     }

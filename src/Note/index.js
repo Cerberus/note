@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import { compose } from 'recompose'
 
 const DELETE_NOTE = gql`
-  mutation($id: ID!) {
+  mutation NoteM ($id: ID!) {
     deleteNote(id: $id) {
       id
     }
