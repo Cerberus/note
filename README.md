@@ -48,3 +48,14 @@ yarn start
 ### Playground
 Open `Simple API` link on the browser to access Playground
 ![playground](https://user-images.githubusercontent.com/9087409/30781573-ad4ff7b2-a14b-11e7-85d2-73c4f023adcd.png)
+
+
+### Update query document (src/schema/gen.json)
+```
+yarn intro
+```
+
+### Generate all component's type-annotations
+```
+yarn gen
+```
