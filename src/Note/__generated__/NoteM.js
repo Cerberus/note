@@ -9,7 +9,8 @@
 // ====================================================
 
 export type NoteM_deleteNote = {
-  id: string
+  id: string,
+  detail: ?string,
 };
 
 export type NoteM = {

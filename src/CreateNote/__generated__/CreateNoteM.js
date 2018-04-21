@@ -9,7 +9,8 @@
 // ====================================================
 
 export type CreateNoteM_createNote = {
-  id: string
+  id: string,
+  detail: ?string,
 };
 
 export type CreateNoteM = {
