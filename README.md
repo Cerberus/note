@@ -1,7 +1,10 @@
 # note 📔
 Apollo Client 2.0 with WebSocket Example, Initial project by [create-react-app](https://github.com/facebookincubator/create-react-app)
 
-[🎉 medium@SunCerberus](https://medium.com/@SunCerberus/setup-apollo-client-2-0-with-websocket-example-a879ca81aa83)
+## Example on
+[🎉 Setup Apollo 2.0 with Websocket](https://medium.com/@SunCerberus/setup-apollo-client-2-0-with-websocket-example-a879ca81aa83)
+
+[✏️ Automatic Type definition with apollo-codegen ](https://medium.com/@SunCerberus/automatic-type-definition-with-apollo-codegen-example-%EF%B8%8F-87e586a1bac8)
 
 ![note-app](https://user-images.githubusercontent.com/9087409/39082833-a7a727c2-4583-11e8-8139-35d454c2f1ba.gif)
 
